@@ -11,19 +11,22 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Configurations load from file
+CONFIGS = json.loads(open(os.path.join(BASE_DIR, 'configs.json')).read())
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'u+an#11r&=f*a!7+1y+*i@dfm+_2km6=xsbj*$uajg3l$(^7f0'
+SECRET_KEY = CONFIGS['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = CONFIGS['DEBUG']
 
 ALLOWED_HOSTS = ['*']
 
@@ -76,9 +79,9 @@ WSGI_APPLICATION = 'ROC_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'roc',
-        'USER': 'fyt',
-        'PASSWORD': 'fengyutong',
+        'NAME': CONFIGS['DB_NAME'],
+        'USER': CONFIGS['DB_USER'],
+        'PASSWORD': CONFIGS['DB_PASS'],
     }
 }
 

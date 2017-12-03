@@ -1,0 +1,7 @@
+{
+  "SECRET_KEY": "ThisIsARandomStringWithLength=50!-----------------",
+  "DEBUG": true,
+  "DB_NAME": "roc",
+  "DB_USER": "user",
+  "DB_PASS": "pass"
+}
