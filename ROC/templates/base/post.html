@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>{{post.title}}</h3>
+        <small>
+            {% bootstrap_icon 'user' %}<strong>{{post.author}}</strong>
+            {% bootstrap_icon 'time' %}{{post.created_at}}
+        </small>
+    </div>
+    <div class="panel-body word-wrap">
+        {{ post.content }}
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+<ul class="list-group">
+    <li class="list-group-item">{{post.replies.count}} 条课程评价</li>
+    {% for reply in post.replies.all %}
+    <li class="list-group-item clearfix">
+        <div class="word-wrap">{{reply.content}}</div>
+        <div class="pull-right">
+            {% bootstrap_icon 'user' %}<b>{{reply.author}}</b>
+            {% bootstrap_icon 'time' %}{{reply.created_at }}
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+<div class="panel panel-default">
+    <div class="panel-heading">创建新评价</div>
+    <div class="panel-body">
+        <form method="POST" action="{% url 'reply' post.id %}">
+            {% csrf_token %}
+            {% bootstrap_form reply_form layout='inline' %}
+            {% buttons submit='提交' %}{% endbuttons %}
+        </form>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
