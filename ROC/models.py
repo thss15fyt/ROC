@@ -10,7 +10,7 @@ class Apartment(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=128)
-    teacher = models.CharField(max_length=20)
+    teacher = models.CharField(max_length=64)
     apartment = models.ForeignKey(Apartment)
     course_id = models.CharField(max_length=32)
     credit = models.PositiveIntegerField()
