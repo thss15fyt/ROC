@@ -1,8 +1,8 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<h3>注册</h3>
-<div>
-    <form method="post" action="{% url 'signup-submit' %}">
+<div class="col-xs-6 col-md-offset-3">
+    <h3>注册</h3>
+    <form method="post" action="{% url 'signup_submit' %}">
         {% csrf_token %}
         <div class="form-group">
             <label for="username">用户名</label>
@@ -13,12 +13,8 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="密码" required />
         </div>
         <div class="form-group">
-            <label for="passwordagain">确认密码</label>
-            <input type="password" id="passwordagain" name="passwordagain" class="form-control" placeholder="确认密码" required />
-        </div>
-        <div class="form-group">
-            <label for="address">确认密码</label>
-            <input type="text" id="address" name="address" class="form-control" placeholder="邮箱" required />
+            <label for="email">邮箱</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="邮箱" required />
         </div>
         <button type="submit" class="btn btn-primary">注册</button>
     </form>

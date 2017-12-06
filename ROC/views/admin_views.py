@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from ROC.models import *
-import re
 
 
 @login_required
@@ -10,7 +9,7 @@ def add_courses(request):
     return render(request, 'admin/add_courses.html')
 
 
-#@login_required
+@login_required
 def add_courses_submit(request):
     file = request.FILES.get('courses_file')
     for line in file:

@@ -1,6 +1,4 @@
 {% extends 'base/base.html' %}
-{% load bootstrap3 %}
-
 {% block content %}
 <div class="col-lg-6 col-lg-offset-3">
         <div class="input-group">
@@ -8,21 +6,22 @@
             <span class="input-group-btn">
                 <button class="btn btn-info" type="submit">搜索</button>
             </span>
-        </div><!-- /input-group -->
-</div><!-- /.col-lg-6 -->
-<table>
-    <tbody class="table">
-        {% for post in posts %}
-        <tr>
-            <td><a href="{% url 'post' post.id %}">{{post.title}}</a>
-            <div class="pull-right">
-                {% bootstrap_icon 'user' %}<b>{{post.author}}</b>
-                {% bootstrap_icon 'time' %}{{post.created_at}}
-            </div>
-
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
+        </div>
+</div>
+<table class="table table-striped">
+  <caption></caption>
+  <thead>
+    <tr>
+      <th>课程</th>
+      <th>院系</th>
+      <th>教师</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tanmay</td>
+      <td>Bangalore</td>
+      <td>560001</td>
+    </tr>
 </table>
 {% endblock %}
