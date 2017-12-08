@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -39,7 +40,7 @@ class CourseComment(models.Model):
     course = models.ForeignKey(Course)
     content = models.TextField()
     author = models.ForeignKey(User)
-    create_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
     status = models.IntegerField(default=1)
     PUBLISHED = 1
     DELETED = -1

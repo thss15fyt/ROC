@@ -1,27 +1,36 @@
 {% extends 'base/base.html' %}
 {% block content %}
 <div class="col-lg-6 col-lg-offset-3">
+    <form method="get" action="/course_search">
+        {% csrf_token %}
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="输入课程信息">
+            <input type="text" id="keyword" name="keyword" class="form-control"
+            placeholder="输入课程信息" value="{{keyword}}">
             <span class="input-group-btn">
-                <button class="btn btn-info" type="submit">搜索</button>
+                <button class="btn btn-info">搜索</button>
             </span>
         </div>
+    </form>
 </div>
 <table class="table table-striped">
   <caption></caption>
   <thead>
     <tr>
       <th>课程</th>
-      <th>院系</th>
       <th>教师</th>
+      <th>院系</th>
     </tr>
   </thead>
   <tbody>
+    {% for course in courses %}
     <tr>
-      <td>Tanmay</td>
-      <td>Bangalore</td>
-      <td>560001</td>
+      <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
+      <td>{{course.teacher}}</td>
+      <td>{{course.apartment.name}}</td>
     </tr>
+    {% endfor %}
 </table>
+
+{% block pager %}{% endblock %}
+
 {% endblock %}
