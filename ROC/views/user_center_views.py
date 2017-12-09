@@ -7,3 +7,7 @@ def user_info(request):
 
 def user_courses(request):
     return render(request, 'user_center/user_courses.html')
+
+
+def user_comments(request):
+    return render(request, 'user_center/user_comments.html')

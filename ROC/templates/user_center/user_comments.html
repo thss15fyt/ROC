@@ -1,0 +1,23 @@
+{% extends 'user_center/user_center.html' %}
+
+{% block user_center_content %}
+    <ul class="list-group">
+        <li class="list-group-item clearfix">
+            <div class="word-wrap">
+                <h3>课程评价</h3>
+            </div>
+        </li>
+        <div class="panel panel-default">
+    <div class="panel-body">
+        <h5>&nbsp;{{course.coursecomment_set.count}} 条课程评价</h5>
+        <hr/>
+        {% for comment in comments %}
+            <h4>{{comment.course.name}}</h4>
+            <p>{{comment.content}}</p>
+            <hr/>
+        {% endfor %}
+    </div>
+</div>
+
+    </ul>
+{% endblock %}

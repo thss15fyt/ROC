@@ -10,21 +10,21 @@
         <li class="list-group-item clearfix">
             <div class="word-wrap">
                 <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>课程</th>
-                      <th>教师</th>
-                      <th>院系</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for course in courses %}
-                    <tr>
-                      <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
-                      <td>{{course.teacher}}</td>
-                      <td>{{course.apartment.name}}</td>
-                    </tr>
-                    {% endfor %}
+                    <thead>
+                        <tr>
+                            <th>课程</th>
+                            <th>教师</th>
+                            <th>院系</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
+                            <td>{{course.teacher}}</td>
+                            <td>{{course.apartment.name}}</td>
+                        </tr>
+                        {% endfor %}
                 </table>
             </div>
         </li>
