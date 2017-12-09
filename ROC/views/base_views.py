@@ -7,7 +7,7 @@ from ROC.models import User
 
 
 def index(request):
-    return render(request, 'course_comment/course_list.html')
+    return redirect('course_all')
 
 
 def login(request):
@@ -22,7 +22,7 @@ def authenticate(request):
     if not user:
         return redirect('login')
     auth.login(request, user)
-    return redirect('course_list')
+    return redirect('course_all')
 
 
 def signup(request):

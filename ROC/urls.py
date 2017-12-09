@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from ROC.views import base_views, admin_views, course_comment_views
+from ROC.views import base_views, admin_views, course_comment_views, user_center_views
 
 urlpatterns = [
     # base
@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^logout$', base_views.logout, name='logout'),
 
     # user center
+    url(r'user_info$', user_center_views.user_info, name='user_info'),
 
     # course comment
     url(r'^course_all', course_comment_views.course_all, name='course_all'),
