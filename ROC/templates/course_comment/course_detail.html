@@ -9,19 +9,19 @@
 
     <div class="panel-body">
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <p><b>主讲教师</b>: {{course.teacher}}</p>
                 <p><b>开课院系</b>: {{course.apartment.name}}</p>
                 <p><b>学分</b>: {{course.credit}}</p>
                 <p><b>课程特色</b>: {{course.feature}}</p>
             </div>
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <p><b>课程号</b>: {{course.course_id}}</p>
                 <p><b>本科生课容量</b>: {{course.undergraduate_capacity}}</p>
                 <p><b>研究生课容量</b>: {{course.postgraduate_capacity}}</p>
                 <p><b>年级</b>: {{course.grade}}</p>
             </div>
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <p><b>是否二级选课</b>: {% if course.second_choose_flag %}是{% else %}否{% endif %}</p>
                 <p><b>是否重修占容量</b>: {% if course.retake_flag %}是{% else %}否{% endif %}</p>
                 <p><b>是否选课时限制</b>: {% if course.choose_restrict_flag %}是{% else %}否{% endif %}</p>
