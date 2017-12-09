@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from ROC.views import base_views, admin_views, course_comment_views, user_center_views
+from django.conf.urls.static import static
+from ROC_project import settings
 
 urlpatterns = [
     # base
@@ -27,4 +29,4 @@ urlpatterns = [
     # admin
     url('^add_courses$', admin_views.add_courses, name='add_courses'),
     url('^add_courses_submit$', admin_views.add_courses_submit, name='add_courses_submit'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
