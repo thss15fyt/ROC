@@ -1,22 +1,10 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from ROC.models import *
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.core.urlresolvers import reverse
-
-
-def item_paginator(request, item_all):
-    paginator = Paginator(item_all, 20)
-    page = request.GET.get('page')
-    try:
-        items = paginator.page(page)
-    except PageNotAnInteger:
-        items = paginator.page(1)
-    except EmptyPage:
-        items = paginator.page(paginator.num_pages)
-    return items
+from ROC.models import *
+from ROC.views.utils import item_paginator
 
 
 def course_all(request):

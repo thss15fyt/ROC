@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from ROC_project import settings
 from ROC.models import CourseComment
+from ROC.views.utils import item_paginator
 import time
 
 @login_required
@@ -43,6 +44,7 @@ def user_courses(request):
 
 @login_required
 def user_comments(request):
-    comments = CourseComment.objects.filter(author=request.user)
+    comment_all = CourseComment.objects.filter(author=request.user)
+    comments = item_paginator(request, comment_all)
     return render(request, 'user_center/user_comments.html',
                   {'comments': comments, 'length': len(comments)})
