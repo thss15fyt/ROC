@@ -3,5 +3,6 @@
   "DEBUG": true,
   "DB_NAME": "roc",
   "DB_USER": "user",
-  "DB_PASS": "pass"
+  "DB_PASS": "pass",
+  "SITE_DOMAIN": "http://your_domain"
 }

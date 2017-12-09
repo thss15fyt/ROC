@@ -2,7 +2,7 @@
 
 {% block user_center_content %}
 {% load static %}
-<form method="post" enctype="multipart/form-data" action="">
+<form method="post" enctype="multipart/form-data" action="{% url 'user_info_submit' %}">
     {% csrf_token %}
     <ul class="list-group">
         <li class="list-group-item clearfix">
@@ -13,7 +13,7 @@
         <li class="list-group-item clearfix">
             <div class="word-wrap">
                 <div class="col-md-3" style="top:1em;float:right">
-                    <img src="{% static 'img/default_avatar.jpg' %}" width="120em" height="120em">
+                    <img src="{% static 'img/default_avatar.jpg' %}" width="80em" height="80em">
                     <p>&nbsp;</p>
                     <input type="file" id="avatar" name="avatar"/>
                 </div>
@@ -40,14 +40,6 @@
                             <td style="border-top:0">
                                 <div class="form-group" style="display:inline-block;margin-bottom:0">
                                     <label for="nickname" style="float:left;padding-top:7px">昵称:&nbsp;&nbsp;</label>
-                                    <input type="text" value = "{{ user.username }}" id="nickname" name="nickname" class="form-control" required style="float:left;width:30em" />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="border-top:0">
-                                <div class="form-group" style="display:inline-block;margin-bottom:0">
-                                    <label for="nickname" style="float:left;padding-top:7px">年级:&nbsp;&nbsp;</label>
                                     <input type="text" value = "{{ user.username }}" id="nickname" name="nickname" class="form-control" required style="float:left;width:30em" />
                                 </div>
                             </td>

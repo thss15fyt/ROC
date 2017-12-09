@@ -12,6 +12,7 @@ urlpatterns = [
 
     # user center
     url(r'user_info$', user_center_views.user_info, name='user_info'),
+    url(r'user_info/submit$', user_center_views.user_info_submit, name='user_info_submit'),
     url(r'user_courses$', user_center_views.user_courses, name='user_courses'),
     url(r'user_comments$', user_center_views.user_comments, name='user_comments'),
 

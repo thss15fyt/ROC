@@ -1,8 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from ROC_project import settings
 
 # Create your models here.
+
+
+class UserInfo(models.Model):
+    user = models.OneToOneField(User)
+    nickname = models.CharField(max_length=64)
+    avatar_url = models.CharField(max_length=256, default=settings.get_url('static/img/default_avatar.jpg'))
+
+    user_type = models.IntegerField(default=1)
+    NORMAL = 1
+    ADMIN = 2
 
 
 class Apartment(models.Model):
