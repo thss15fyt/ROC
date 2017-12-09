@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib import auth
-from ROC.models import User
+from ROC.models import User, UserInfo
 # Create your views here.
 
 
@@ -35,7 +35,8 @@ def signup_submit(request):
     password = request.POST.get('password')
     email = request.POST.get('email')
     try:
-        User.objects.create_user(username=username, password=password, email=email)
+        user = User.objects.create_user(username=username, password=password, email=email)
+        UserInfo.objects.create(user=user, nickname=username)
         return redirect('login')
     except:
         return redirect('signup')
