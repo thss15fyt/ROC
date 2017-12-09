@@ -1,20 +1,26 @@
 from django.conf.urls import url
-from ROC.views import base_views
+from ROC.views import base_views, admin_views, course_comment_views
 
 urlpatterns = [
     # base
     url(r'^$', base_views.index, name='index'),
     url(r'^login$', base_views.login, name='login'),
-    url(r'^authenticate', base_views.authenticate, name='authenticate'),
+    url(r'^authenticate$', base_views.authenticate, name='authenticate'),
     url(r'^signup$', base_views.signup, name='signup'),
+    url(r'^signup_submit$', base_views.signup_submit, name='signup_submit'),
     url(r'^logout$', base_views.logout, name='logout'),
 
     # user center
 
     # course comment
-
-    # exchange course
+    url(r'^course_all', course_comment_views.course_all, name='course_all'),
+    url(r'^course_search', course_comment_views.course_search, name='course_search'),
+    url(r'^course_detail', course_comment_views.course_detail, name='course_detail'),
+    url(r'^create_comment', course_comment_views.create_comment, name='create_comment'),
 
     # timetable
 
+    # admin
+    url('^add_courses$', admin_views.add_courses, name='add_courses'),
+    url('^add_courses_submit$', admin_views.add_courses_submit, name='add_courses_submit'),
 ]
