@@ -1,0 +1,14 @@
+{% extends 'course_comment/course_list.html' %}
+{% block pager %}
+<ul class="pager">
+    <li><a href="?page=1">首页</a></li>
+    {% if courses.has_previous %}
+	    <li><a href="?page={{ courses.previous_page_number }}">上一页</a></li>
+	{% endif %}
+	<li> &nbsp{{ courses.number }} / {{ courses.paginator.num_pages }}&nbsp </li>
+	{% if courses.has_next %}
+	    <li><a href="?page={{ courses.next_page_number }}">下一页</a></li>
+	{% endif %}
+	<li><a href="?page={{courses.paginator.num_pages}}">末页</a></li>
+</ul>
+{% endblock %}
