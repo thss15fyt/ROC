@@ -14,11 +14,10 @@
 		        <a class="navbar-brand" href="">ROC</a>
 	        </div>
 	        <div>
-		        <ul class="nav navbar-nav">
-			        <li><a href="#">课程列表</a></li>
-			        <li><a href="#">换课广场</a></li>
-			        <li><a href="#">智能课表</a></li>
-		        </ul>
+				<ul class="nav nav-pills col-lg-offset-2">
+    				<li class="col-lg-2"><a href="{% url 'index' %}">课程列表</a></li>
+	    			<li class="col-lg-2"><a href="#">智能课表</a></li>
+	    	    </ul>
 		        <ul class="nav navbar-nav navbar-right">
 		            {% if user.is_authenticated %}
 		            <li><a href="#">个人中心</a></li>
@@ -32,7 +31,8 @@
 	        </div>
 	    </div>
     </nav>
-
+    <br>
+	<br>
     <div class="container">
         <section id="content">{% block content %}{% endblock %}</section>
         <footer class="footer">
