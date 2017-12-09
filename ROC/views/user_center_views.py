@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from ROC_project import settings
+from ROC.models import CourseComment
 import time
 
 @login_required
@@ -42,4 +43,6 @@ def user_courses(request):
 
 @login_required
 def user_comments(request):
-    return render(request, 'user_center/user_comments.html')
+    comments = CourseComment.objects.filter(author=request.user)
+    return render(request, 'user_center/user_comments.html',
+                  {'comments': comments, 'length': len(comments)})

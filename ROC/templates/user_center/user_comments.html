@@ -9,10 +9,10 @@
         </li>
         <div class="panel panel-default">
     <div class="panel-body">
-        <h5>&nbsp;{{course.coursecomment_set.count}} 条课程评价</h5>
+        <h5>&nbsp;{{length}} 条课程评价</h5>
         <hr/>
         {% for comment in comments %}
-            <h4>{{comment.course.name}}</h4>
+            <h4><a href="/course_detail?id={{comment.course.id}}">{{comment.course.name}}</a></h4>
             <p>{{comment.content}}</p>
             <hr/>
         {% endfor %}
