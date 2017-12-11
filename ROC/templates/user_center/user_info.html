@@ -1,0 +1,58 @@
+{% extends 'user_center/user_center.html' %}
+
+{% block user_center_content %}
+{% load static %}
+<form method="post" enctype="multipart/form-data" action="{% url 'user_info_submit' %}">
+    {% csrf_token %}
+    <ul class="list-group">
+        <li class="list-group-item clearfix">
+            <div class="word-wrap">
+                <h3>个人信息</h3>
+            </div>
+        </li>
+        <li class="list-group-item clearfix">
+            <div class="word-wrap">
+                <div class="col-md-3" style="top:1em;float:right">
+                    <img src="{{user.userinfo.avatar_url}}" width="100em" height="100em"
+                    style="border-radius:5em;margin-bottom: 1em">
+                    <input type="file" id="avatar" name="avatar"/>
+                </div>
+                <div class="col-md-7">
+                <table class="table" style="margin-bottom:0">
+                    <tbody>
+                        <tr>
+                            <td style="border-top:0">
+                                <div class="form-group" style="display:inline-block;margin-bottom:0">
+                                    <label for="nickname" style="float:left;padding-top:7px">用户名:&nbsp;&nbsp;{{user.username}}</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top:0">
+                                <div class="form-group" style="display:inline-block;margin-bottom:0">
+                                    <label for="email" style="float:left;padding-top:7px">邮箱:&nbsp;&nbsp;</label>
+                                    <input type="email" value="{{ user.email }}" id="email" name="email" class="form-control" placeholder="邮箱" required style="float:left;width:30em" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-top:0">
+                                <div class="form-group" style="display:inline-block;margin-bottom:0">
+                                    <label for="nickname" style="float:left;padding-top:7px">昵称:&nbsp;&nbsp;</label>
+                                    <input type="text" value = "{{ user.userinfo.nickname }}" id="nickname" name="nickname" class="form-control" required style="float:left;width:30em" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item clearfix">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary">修改</button>
+            </div>
+        </li>
+    </ul>
+</form>
+{% endblock %}

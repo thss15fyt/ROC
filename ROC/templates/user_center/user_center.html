@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar">
+            <h3>个人中心</h3>
+            <ul class="nav nav-sidebar">
+                <li><a href="{% url 'user_info' %}">{% bootstrap_icon 'user' %}&nbsp;个人信息</a></li>
+                <li><a href="{% url 'user_courses' %}">{% bootstrap_icon 'star' %}&nbsp;课程收藏</a></li>
+                <li><a href="{% url 'user_comments' %}">{% bootstrap_icon 'comment' %}&nbsp;课程评价</a></li>
+                <li><a href="">{% bootstrap_icon 'calendar' %}&nbsp;课表收藏</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10 main">
+        {% block user_center_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
