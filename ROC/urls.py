@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^course_search', course_comment_views.course_search, name='course_search'),
     url(r'^course_detail', course_comment_views.course_detail, name='course_detail'),
     url(r'^create_comment', course_comment_views.create_comment, name='create_comment'),
+    url(r'^star_course', course_comment_views.star_course, name='star_course'),
 
     # timetable
 

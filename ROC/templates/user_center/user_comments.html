@@ -17,16 +17,16 @@
             <hr/>
         {% endfor %}
         <ul class="pager">
-        <li><a href="?page=1">首页</a></li>
-        {% if comments.has_previous %}
-            <li><a href="?page={{ comments.previous_page_number }}">上一页</a></li>
-        {% endif %}
-        <li> &nbsp{{ comments.number }} / {{ comments.paginator.num_pages }}&nbsp </li>
-        {% if comments.has_next %}
-            <li><a href="?page={{ comments.next_page_number }}">下一页</a></li>
-        {% endif %}
-        <li><a href="?page={{comments.paginator.num_pages}}">末页</a></li>
-</ul>
+            <li><a href="?page=1">首页</a></li>
+            {% if comments.has_previous %}
+                <li><a href="?page={{ comments.previous_page_number }}">上一页</a></li>
+            {% endif %}
+            <li> &nbsp{{ comments.number }} / {{ comments.paginator.num_pages }}&nbsp </li>
+            {% if comments.has_next %}
+                <li><a href="?page={{ comments.next_page_number }}">下一页</a></li>
+            {% endif %}
+            <li><a href="?page={{comments.paginator.num_pages}}">末页</a></li>
+        </ul>
     </div>
 </div>
 

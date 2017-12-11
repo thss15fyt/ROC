@@ -21,6 +21,7 @@ class Apartment(models.Model):
 
 
 class Course(models.Model):
+    # info
     name = models.CharField(max_length=128)
     teacher = models.CharField(max_length=64)
     apartment = models.ForeignKey(Apartment)
@@ -35,6 +36,9 @@ class Course(models.Model):
     retake_flag = models.BooleanField()     # 重修是否占容量
     choose_restrict_flag = models.BooleanField()    # 是否选课时限制
     group = models.CharField(max_length=64)     # 本科文化素质课组
+
+    # foreign key
+    star_user = models.ManyToManyField(User, related_name='star_courses')
 
     status = models.IntegerField(default=1)
     PUBLISHED = 1

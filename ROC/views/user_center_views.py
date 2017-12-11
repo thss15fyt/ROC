@@ -39,7 +39,10 @@ def user_info_submit(request):
 
 @login_required
 def user_courses(request):
-    return render(request, 'user_center/user_courses.html')
+    star_course_all = request.user.star_courses.all()
+    star_courses = item_paginator(request, star_course_all)
+    return render(request, 'user_center/user_courses.html',
+                  {'star_courses': star_courses})
 
 
 @login_required
