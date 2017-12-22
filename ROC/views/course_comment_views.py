@@ -11,8 +11,10 @@ from ROC.views.utils import item_paginator
 def course_all(request):
     courses_all = Course.objects.all()
     courses = item_paginator(request, courses_all)
+    apartments = Apartment.objects.all()
 
-    return render(request, 'course_comment/course_all.html', {'courses': courses})
+    return render(request, 'course_comment/course_all.html',
+                  {'courses': courses, 'apartments': apartments})
 
 
 def course_search(request):

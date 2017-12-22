@@ -115,8 +115,8 @@ if __name__ == '__main__':
 
 	test_string2 = u'4-6(后八周)'
 	test_string3 = u'4-6(前八周)'
-	print StringTime2Array(test_string0)
+	print(StringTime2Array(test_string0))
 
 	all_course = {u'语文':[test_string0,test_string1], u'英语':[test_string2,test_string3]}
 
-	print form_core(all_course)
+	print(form_core(all_course))
