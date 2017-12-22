@@ -26,8 +26,9 @@ urlpatterns = [
     url(r'^star_course', course_comment_views.star_course, name='star_course'),
 
     # timetable
-    url(r'choose_course$', timetable_views.choose_course, name='choose_course'),
-    url(r'choose_course_detail', timetable_views.choose_course_detail, name='choose_course_detail'),
+    url(r'^choose_course$', timetable_views.choose_course, name='choose_course'),
+    url(r'^choose_course_detail', timetable_views.choose_course_detail, name='choose_course_detail'),
+    url(r'^timetable_result$', timetable_views.timetable_result, name='timetable_result'),
 
     # admin
     url('^add_courses$', admin_views.add_courses, name='add_courses'),

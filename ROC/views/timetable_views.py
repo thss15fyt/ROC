@@ -2,7 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from ROC.views.utils import item_paginator
 from ROC.models import *
+from ROC.views.utils import string_time_to_array, form_core
 import json
+
 
 def choose_course(request):
     course_all = Course.objects.all()
@@ -20,3 +22,19 @@ def choose_course_detail(request):
     response_data['teacher'] = course.teacher
     response_data['apartment'] = course.apartment.name
     return HttpResponse(content=json.dumps(response_data), content_type="application/json")
+
+
+def timetable_result(request):
+    ids = request.GET.get('ids')
+    id_set = ids[:-1].split(',')
+    all_courses = {}
+    for id in id_set:
+        course = get_object_or_404(Course, id=id)
+        times = []
+        for simple_class in course.class_set.all():
+            times.append(simple_class.time)
+        all_courses[course.name] = times
+    results = form_core(all_courses)
+    return render(request, 'timetable/timetable_result.html',
+                  {'results': results})
+

@@ -104,7 +104,7 @@
                     </tr>
                 </tbody>
         </table>
-    	<button type="submit" class="btn btn-primary">生成智能课表</button>
+    	<button onclick="get_form()" type="submit" class="btn btn-primary">生成智能课表</button>
     </div>
 </div>
 {% endblock %}
@@ -145,7 +145,28 @@
     }
 
     function remove(id) {
-      $("#course_" + id).remove();
+        $("#course_" + id).remove();
     }
+
+    function get_form() {
+        var ids = "";
+        $("#select_courses").children().each(function(index, ele){
+            if(match = /^course_([0-9]*)$/.exec(ele.id)) {
+                ids += match[1] + ",";
+            }
+        });
+        $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken:'{{ csrf_token }}',
+                ids: ids
+            }
+        });
+        $.get("/timetable_result", {}, function(data, status) {
+            if(status === 'success') {
+                $(document).find("html").html(data);
+            }
+        })
+    }
+
 </script>
 {% endblock %}
