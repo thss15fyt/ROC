@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from ROC.views import base_views, admin_views, course_comment_views, user_center_views
+from ROC.views import base_views, admin_views, course_comment_views, user_center_views, timetable_views
 from django.conf.urls.static import static
 from ROC_project import settings
 
@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^star_course', course_comment_views.star_course, name='star_course'),
 
     # timetable
+    url(r'choose_course$', timetable_views.choose_course, name='choose_course'),
+    url(r'choose_course_detail', timetable_views.choose_course_detail, name='choose_course_detail'),
 
     # admin
     url('^add_courses$', admin_views.add_courses, name='add_courses'),

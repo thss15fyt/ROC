@@ -85,20 +85,19 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'jquery/jquery-3.2.1.min.js' %}"></script>
 <script>
     function star_course() {
         star_button = $("#star_button");
         console.log(star_button.val())
         if(star_button.val() === '1') {
             $.ajaxSetup({
-            data: {
-                csrfmiddlewaretoken:'{{ csrf_token }}',
-                id: '{{ course.id }}',
-                star: 1
-            }
+                data: {
+                    csrfmiddlewaretoken:'{{ csrf_token }}',
+                    id: '{{ course.id }}',
+                    star: 1
+                }
             });
-            $.post("/star_course?id={{course.id}}", {}, function(data, status) {
+            $.post("/star_course", {}, function(data, status) {
                 if(data === '1') {
                     star_button.text("取消收藏");
                     star_button.val(0);
@@ -112,7 +111,7 @@
                 star: 0
             }
             });
-            $.post("/star_course?id={{course.id}}", {}, function(data, status) {
+            $.post("/star_course", {}, function(data, status) {
                 if(data === '1') {
                     star_button.text("收藏课程");
                     star_button.val(1);

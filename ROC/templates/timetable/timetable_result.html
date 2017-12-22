@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-    <title>autogradROC</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/jquery-3.2.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-</head>
-<body>
-	<h2 class="text-center">智能课程表</h2>
-    <br>
-    <br>
-    <div class="col-lg-8 col-lg-offset-2">
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h2 class="text-center">智能课程表</h2>
+<br>
+<br>
+<div class="col-lg-8 col-lg-offset-2">
     <table class="table table-bordered" style="word-break:break-all; word-wrap:break-all;">
         <thead>
             <tr>
@@ -88,11 +81,12 @@
             </tr>
         </tbody>
     </table>
-    </div>
-    <br>
-    <br>
-    <div class="col-lg-8 col-lg-offset-2">
-        <button type="submit" class="btn btn-success pull-left">上一方案</button>
-        <button type="submit" class="btn btn-success pull-right">下一方案</button>
-    </div>
-</body>
+</div>
+<br>
+<br>
+<div class="col-lg-8 col-lg-offset-2">
+    <button type="submit" class="btn btn-success pull-left">上一方案</button>
+    <button type="submit" class="btn btn-success pull-right">下一方案</button>
+</div>
+
+{% endblock %}
