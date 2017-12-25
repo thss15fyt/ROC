@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load bootstrap3 %}
+{% load static %}
 
 {% block content %}
 <div class="panel panel-default">
@@ -9,19 +10,19 @@
 
     <div class="panel-body">
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <p><b>主讲教师</b>: {{course.teacher}}</p>
                 <p><b>开课院系</b>: {{course.apartment.name}}</p>
                 <p><b>学分</b>: {{course.credit}}</p>
                 <p><b>课程特色</b>: {{course.feature}}</p>
             </div>
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <p><b>课程号</b>: {{course.course_id}}</p>
                 <p><b>本科生课容量</b>: {{course.undergraduate_capacity}}</p>
                 <p><b>研究生课容量</b>: {{course.postgraduate_capacity}}</p>
                 <p><b>年级</b>: {{course.grade}}</p>
             </div>
-            <div class="col-xs-4">
+            <div class="col-md-4">
                 <p><b>是否二级选课</b>: {% if course.second_choose_flag %}是{% else %}否{% endif %}</p>
                 <p><b>是否重修占容量</b>: {% if course.retake_flag %}是{% else %}否{% endif %}</p>
                 <p><b>是否选课时限制</b>: {% if course.choose_restrict_flag %}是{% else %}否{% endif %}</p>
@@ -29,7 +30,18 @@
             </div>
         </div>
         <p><b>选课文字说明</b>: {{course.explain}}</p>
-
+        <button type="button" class="btn btn-default" style="float:right;margin-left:1em;">
+            {% bootstrap_icon 'pencil' %} 写评价
+        </button>
+        {% if stared %}
+        <button id="star_button" onclick="star_course()" type="button" class="btn btn-primary" style="float:right;" value=0>
+            取消收藏
+        </button>
+        {% else %}
+        <button id="star_button" onclick="star_course()" type="button" class="btn btn-primary" style="float:right;" value=1>
+            收藏课程
+        </button>
+        {% endif %}
     </div>
 </div>
 
@@ -38,11 +50,16 @@
         <h5>&nbsp;{{course.coursecomment_set.count}} 条课程评价</h5>
         <hr/>
         {% for comment in comments  %}
-            <p>{{comment.content}}</p>
-            <p style="text-align: right">
-                {% bootstrap_icon 'user' %}&nbsp;{{comment.author.username}}&nbsp;
-                {% bootstrap_icon 'time' %}&nbsp;{{comment.created_at}}&nbsp;
-            </p>
+            <div class="row">
+                <div class="col-md-1" style="float:left;">
+                    <img src="{{user.userinfo.avatar_url}}" width="60em" height="60em" style="border-radius:3em">
+                </div>
+                <div class="col-md-3" style="float:left;margin-top:0.5em;margin-left:-1.5em;">
+                    <p>{% bootstrap_icon 'user' %}&nbsp;<b>{{comment.author.userinfo.nickname}}</b></p>
+                    <p>{% bootstrap_icon 'time' %}&nbsp;{{comment.created_at}}</p>
+                </div>
+            </div>
+            <div style="margin:1em;"><p>{{comment.content}}</p></div>
             <hr/>
         {% endfor %}
     </div>
@@ -65,5 +82,41 @@
     </form>
 </div>
 {% endif %}
+{% endblock %}
 
+{% block scripts %}
+<script>
+    function star_course() {
+        star_button = $("#star_button");
+        if(star_button.val() === '1') {
+            $.ajaxSetup({
+                data: {
+                    csrfmiddlewaretoken:'{{ csrf_token }}',
+                    id: '{{ course.id }}',
+                    star: 1
+                }
+            });
+            $.post("/star_course", {}, function(data, status) {
+                if(status === 'success' && data === '1') {
+                    star_button.text("取消收藏");
+                    star_button.val(0);
+                }
+            })
+        } else {
+            $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken:'{{ csrf_token }}',
+                id: '{{ course.id }}',
+                star: 0
+            }
+            });
+            $.post("/star_course", {}, function(data, status) {
+                if(status === 'success' && data === '1') {
+                    star_button.text("收藏课程");
+                    star_button.val(1);
+                }
+            })
+        }
+    }
+</script>
 {% endblock %}

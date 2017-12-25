@@ -1,0 +1,34 @@
+{% extends 'user_center/user_center.html' %}
+
+{% block user_center_content %}
+    <ul class="list-group">
+        <li class="list-group-item clearfix">
+            <div class="word-wrap">
+                <h3>课程评价</h3>
+            </div>
+        </li>
+        <div class="panel panel-default">
+    <div class="panel-body">
+        <h5>&nbsp;{{length}} 条课程评价</h5>
+        <hr/>
+        {% for comment in comments %}
+            <h4><a href="/course_detail?id={{comment.course.id}}">{{comment.course.name}}</a></h4>
+            <p>{{comment.content}}</p>
+            <hr/>
+        {% endfor %}
+        <ul class="pager">
+            <li><a href="?page=1">首页</a></li>
+            {% if comments.has_previous %}
+                <li><a href="?page={{ comments.previous_page_number }}">上一页</a></li>
+            {% endif %}
+            <li> &nbsp{{ comments.number }} / {{ comments.paginator.num_pages }}&nbsp </li>
+            {% if comments.has_next %}
+                <li><a href="?page={{ comments.next_page_number }}">下一页</a></li>
+            {% endif %}
+            <li><a href="?page={{comments.paginator.num_pages}}">末页</a></li>
+        </ul>
+    </div>
+</div>
+
+    </ul>
+{% endblock %}

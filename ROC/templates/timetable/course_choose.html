@@ -1,0 +1,172 @@
+{% extends 'base/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="col-md-6"  style="height:50em;overflow-y:scroll;">
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+            <a href="#search" data-toggle="tab">课程搜索</a>
+        </li>
+        <li>
+            <a href="#star" data-toggle="tab">课程收藏</a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="search">
+            <br>
+            <div class="input-group col-md-8 col-md-offset-2">
+                <input type="text" class="form-control" placeholder="课程搜索">
+                <span class="input-group-btn">
+                    <button class="btn btn-info" type="submit">搜索</button>
+                </span>
+            </div>
+            <div>
+                <table class="table table-striped">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>课程</th>
+                        <th>教师</th>
+                        <th>院系</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td onclick="select({{course.id}})" style="cursor:pointer;">{% bootstrap_icon 'plus' %}</td>
+                    <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
+                    <td>{{course.teacher}}</td>
+                    <td>{{course.apartment.name}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <ul class="pager">
+                <li><a href="?page=1">首页</a></li>
+                {% if courses.has_previous %}
+                    <li><a href="?page={{ courses.previous_page_number }}">上一页</a></li>
+                {% endif %}
+                <li> &nbsp{{ courses.number }} / {{ courses.paginator.num_pages }}&nbsp </li>
+                {% if courses.has_next %}
+                    <li><a href="?page={{ courses.next_page_number }}">下一页</a></li>
+                {% endif %}
+                <li><a href="?page={{courses.paginator.num_pages}}">末页</a></li>
+            </ul>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="star">
+            <table class="table table-striped">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>课程</th>
+                        <th>教师</th>
+                        <th>院系</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for course in star_courses %}
+                <tr>
+                    <td onclick="select({{course.id}})" style="cursor:pointer;">{% bootstrap_icon 'plus' %}</td>
+                    <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
+                    <td>{{course.teacher}}</td>
+                    <td>{{course.apartment.name}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+	<div class="col-md-offset-2">
+		<h3>已选择课程</h3>
+    	<table class="table table-striped">
+                <caption></caption>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>课程</th>
+                        <th>教师</th>
+                        <th>院系</th>
+                    </tr>
+                </thead>
+                <tbody id="select_courses">
+                    <tr id="template_course" style="display:none;">
+                        <td class="minus" style="cursor:pointer;">{% bootstrap_icon 'minus' %}</td>
+                        <td class="course_name"><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
+                        <td class="course_teacher">{{course.teacher}}</td>
+                        <td class="course_apartment">{{course.apartment.name}}</td>
+                    </tr>
+                </tbody>
+        </table>
+    	<button onclick="get_form()" type="submit" class="btn btn-primary">生成智能课表</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function select(id) {
+
+        selected_flag = false;
+        $("#select_courses").children().each(function(index, ele){
+            if(ele.id === "course_" + id) {
+                selected_flag = true;
+            }
+        });
+        if(selected_flag)
+            return;
+
+        $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken:'{{ csrf_token }}',
+                id: id
+            }
+        });
+
+        var course = $("#template_course").clone(true);
+        course.attr("id", "course_" + id);
+        course.css("display", "table-row");
+        $.get("/choose_course_detail", {}, function(data, status) {
+            if(status === 'success') {
+                course.children("td.minus").attr('onclick', 'remove(' + id + ')');
+                course.children("td.course_name").html('<a href="/course_detail?id=' + id + '">' + data['name'] + '</a>');
+                course.children("td.course_teacher").html(data['teacher']);
+                course.children("td.course_apartment").html(data['apartment']);
+            }
+        });
+
+        $("#select_courses").append(course);
+    }
+
+    function remove(id) {
+        $("#course_" + id).remove();
+    }
+
+    function get_form() {
+        var ids = "";
+        $("#select_courses").children().each(function(index, ele){
+            if(match = /^course_([0-9]*)$/.exec(ele.id)) {
+                ids += match[1] + ",";
+            }
+        });
+        $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken:'{{ csrf_token }}',
+                ids: ids
+            }
+        });
+        $.get("/timetable_result", {}, function(data, status) {
+            if(status === 'success') {
+                $(document).find("html").html(data);
+            }
+        })
+    }
+
+</script>
+{% endblock %}
