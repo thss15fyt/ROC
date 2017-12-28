@@ -5,9 +5,10 @@
 <h2 class="text-center">智能课程表</h2>
 <br>
 <br>
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-10 col-md-offset-1">
     {% for result in results %}
-    <table class="table table-bordered" style="word-break:break-all; word-wrap:break-all;">
+    <table id="form_{{forloop.counter}}"class="table table-bordered"
+    style="word-break:break-all;{% if not forloop.first %}display:none;{% endif %}">
         <thead>
             <tr>
                 <th></th>
@@ -87,9 +88,44 @@
 </div>
 <br>
 <br>
-<div class="col-md-8 col-md-offset-2">
-    <button type="submit" class="btn btn-success pull-left">上一方案</button>
-    <button type="submit" class="btn btn-success pull-right">下一方案</button>
+<div class="col-md-10 col-md-offset-1">
+    <button id="button_prev" onclick="prev(1)" type="submit" class="btn btn-success pull-left" style="display:none;">上一方案</button>
+    <button id="button_next" onclick="next(1)" type="submit" class="btn btn-success pull-right"
+    {% if results|length == 1 %} style="display:none;" {% endif %}>下一方案</button>
 </div>
+{% endblock %}
 
+{% block scripts %}
+<script>
+    function prev(index) {
+        var prev;
+        if(prev = $("#form_" + (index-1).toString())) {
+            $("#form_" + index.toString()).css("display", "none");
+            prev.css("display", "table");
+            $("#button_prev").attr('onclick', 'prev(' + (index-1) + ')');
+            $("#button_next").attr('onclick', 'next(' + (index-1) + ')');
+            if($("#form_" + (index-2).toString()).length > 0) {
+                $("#button_prev").css("display", "inline-block");
+            } else {
+                $("#button_prev").css("display", "none");
+            }
+            $("#button_next").css("display", "inline-block");
+        }
+    }
+    function next(index) {
+        var next;
+        if(next = $("#form_" + (index+1).toString())) {
+            $("#form_" + index.toString()).css("display", "none");
+            next.css("display", "table");
+            $("#button_prev").attr('onclick', 'prev(' + (index+1) + ')');
+            $("#button_next").attr('onclick', 'next(' + (index+1) + ')');
+            $("#button_prev").css("display", "inline-block");
+            if($("#form_" + (index+2).toString()).length > 0) {
+                $("#button_next").css("display", "inline-block");
+            } else {
+                $("#button_next").css("display", "none");
+            }
+        }
+    }
+</script>
 {% endblock %}

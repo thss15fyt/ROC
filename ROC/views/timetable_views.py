@@ -25,7 +25,7 @@ def choose_course_detail(request):
 
 
 def timetable_result(request):
-    ids = request.GET.get('ids')
+    ids = request.POST.get('ids')
     id_set = ids[:-1].split(',')
     all_courses = {}
     for id in id_set:

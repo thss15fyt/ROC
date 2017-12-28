@@ -105,6 +105,10 @@
                 </tbody>
         </table>
     	<button onclick="get_form()" type="submit" class="btn btn-primary">生成智能课表</button>
+    	<form id="choose_form" action="/timetable_result" method="post">
+    	    {% csrf_token %}
+    	    <input id="ids_field" type="hidden" name="ids">
+        </form>
     </div>
 </div>
 {% endblock %}
@@ -155,17 +159,9 @@
                 ids += match[1] + ",";
             }
         });
-        $.ajaxSetup({
-            data: {
-                csrfmiddlewaretoken:'{{ csrf_token }}',
-                ids: ids
-            }
-        });
-        $.get("/timetable_result", {}, function(data, status) {
-            if(status === 'success') {
-                $(document).find("html").html(data);
-            }
-        })
+        var $form = $("#choose_form");
+        $("#ids_field").val(ids);
+        $form.submit();
     }
 
 </script>

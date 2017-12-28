@@ -30,7 +30,7 @@
             </div>
         </div>
         <p><b>选课文字说明</b>: {{course.explain}}</p>
-        <button type="button" class="btn btn-default" style="float:right;margin-left:1em;">
+        <button onclick="write_comment()" type="button" class="btn btn-default" style="float:right;margin-left:1em;">
             {% bootstrap_icon 'pencil' %} 写评价
         </button>
         {% if stared %}
@@ -117,6 +117,10 @@
                 }
             })
         }
+    }
+    function write_comment() {
+        var h = $(document).height()-$(window).height();
+        $(document).scrollTop(h);
     }
 </script>
 {% endblock %}
