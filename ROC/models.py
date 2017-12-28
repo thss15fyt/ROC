@@ -50,7 +50,7 @@ class Course(models.Model):
 class Class(models.Model):
     course = models.ForeignKey(Course)
     class_id = models.CharField(max_length=32)
-    time = models.CharField(max_length=256)  # TODO: split class time into models
+    time = models.CharField(max_length=256)
 
 
 class CourseComment(models.Model):
