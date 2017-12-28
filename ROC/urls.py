@@ -34,4 +34,6 @@ urlpatterns = [
     # admin
     url('^add_courses$', admin_views.add_courses, name='add_courses'),
     url('^add_courses_submit$', admin_views.add_courses_submit, name='add_courses_submit'),
+    url('^manage_courses$', admin_views.manage_courses, name='manage_courses'),
+    url('^remove_course', admin_views.remove_course, name='remove_course'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

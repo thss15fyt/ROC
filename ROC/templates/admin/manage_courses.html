@@ -1,0 +1,49 @@
+{% extends 'admin/admin_base.html' %}
+
+{% block admin_content %}
+    <ul class="list-group">
+        <li class="list-group-item clearfix">
+            <div class="word-wrap">
+                <h3>课程管理</h3>
+            </div>
+        </li>
+        <li class="list-group-item clearfix">
+            <div class="word-wrap">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>课程</th>
+                            <th>教师</th>
+                            <th>院系</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                            <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
+                            <td>{{course.teacher}}</td>
+                            <td>{{course.apartment.name}}</td>
+                            <td>
+                                <form method="post" action="/remove_course?id={{course.id}}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger" >删除</button>
+                                </form>
+                        </tr>
+                        {% endfor %}
+                </table>
+            </div>
+            <ul class="pager">
+                <li><a href="?page=1">首页</a></li>
+                {% if courses.has_previous %}
+                    <li><a href="?page={{ courses.previous_page_number }}">上一页</a></li>
+                {% endif %}
+                <li> &nbsp{{ courses.number }} / {{ courses.paginator.num_pages }}&nbsp </li>
+                {% if courses.has_next %}
+                    <li><a href="?page={{ courses.next_page_number }}">下一页</a></li>
+                {% endif %}
+                <li><a href="?page={{ courses.paginator.num_pages}}">末页</a></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

@@ -7,7 +7,7 @@ import json
 
 
 def choose_course(request):
-    course_all = Course.objects.all()
+    course_all = Course.objects.exclude(status=Course.DELETED).all()
     courses = item_paginator(request, course_all)
     if request.user.is_authenticated:
         star_courses = request.user.star_courses.all()
@@ -19,14 +19,14 @@ def choose_course(request):
 
 def choose_course_search(request):
     keyword = request.GET.get('keyword')
-    courses = Course.objects.filter(name__contains=keyword)
+    courses = Course.objects.exclude(status=Course.DELETED).filter(name__contains=keyword)
     return render(request, 'timetable/search_result.html',
                   {'courses': courses})
 
 
 def choose_course_detail(request):
     id = request.GET.get('id')
-    course = get_object_or_404(Course, id=id)
+    course = get_object_or_404(Course, id=id, status=Course.PUBLISHED)
     response_data = {}
     response_data['name'] = course.name
     response_data['teacher'] = course.teacher
@@ -39,7 +39,7 @@ def timetable_result(request):
     id_set = ids[:-1].split(',')
     all_courses = {}
     for id in id_set:
-        course = get_object_or_404(Course, id=id)
+        course = get_object_or_404(Course, id=id, status=Course.PUBLISHED)
         times = []
         for simple_class in course.class_set.all():
             times.append(simple_class.time)

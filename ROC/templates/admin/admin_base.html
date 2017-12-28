@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar">
+            <h3>ROC管理后台</h3>
+            <ul class="nav nav-sidebar">
+                <li><a href="{% url 'add_courses' %}">{% bootstrap_icon 'list' %}&nbsp;批量添加课程</a></li>
+                <li><a href="{% url 'manage_courses' %}">{% bootstrap_icon 'book' %}&nbsp;管理课程</a></li>
+                <li><a href="#">{% bootstrap_icon 'comment' %}&nbsp;管理评价</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10 main">
+        {% block admin_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

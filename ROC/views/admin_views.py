@@ -1,18 +1,26 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.core.exceptions import ObjectDoesNotExist
 from ROC.models import *
+from ROC.views.utils import item_paginator
 
 
 @login_required
 def add_courses(request):
+    if request.user.userinfo.user_type != UserInfo.ADMIN:
+        return redirect('course_all')
     return render(request, 'admin/add_courses.html')
 
 
 @login_required
 def add_courses_submit(request):
+    if request.user.userinfo.user_type != UserInfo.ADMIN:
+        return redirect('course_all')
+
     file = request.FILES.get('courses_file')
     for line in file:
         info_line = line.decode('utf-8')
@@ -59,6 +67,30 @@ def add_courses_submit(request):
                 class_id=info[2],
                 time=info[8],
             )
-            # print("Create class: %s" % (info[2]))
 
     return render(request, 'admin/add_courses.html')
+
+
+@login_required
+def manage_courses(request):
+    if request.user.userinfo.user_type != UserInfo.ADMIN:
+        return redirect('course_all')
+
+    course_all = Course.objects.exclude(status=Course.DELETED).all()
+    courses = item_paginator(request, course_all)
+
+    return render(request, 'admin/manage_courses.html',
+                  {'courses': courses})
+
+
+@login_required
+@require_POST
+def remove_course(request):
+    if request.user.userinfo.user_type != UserInfo.ADMIN:
+        return redirect('course_all')
+
+    course = get_object_or_404(Course, id=request.GET.get('id'))
+    course.status = Course.DELETED
+    course.save()
+
+    return redirect('manage_courses')

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from ROC_project import settings
-from ROC.models import CourseComment
+from ROC.models import Course, CourseComment
 from ROC.views.utils import item_paginator
 import time
 
@@ -39,7 +39,7 @@ def user_info_submit(request):
 
 @login_required
 def user_courses(request):
-    star_course_all = request.user.star_courses.all()
+    star_course_all = request.user.star_courses.exclude(status=Course.DELETED).all()
     star_courses = item_paginator(request, star_course_all)
     return render(request, 'user_center/user_courses.html',
                   {'star_courses': star_courses})
