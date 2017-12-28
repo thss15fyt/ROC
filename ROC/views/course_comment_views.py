@@ -42,7 +42,8 @@ def create_comment(request):
     course = get_object_or_404(Course, pk=course_id)
     comment_content = request.POST.get('comment')
     if len(comment_content) > 0:
-        CourseComment.objects.create(course=course, content=comment_content, author=request.user)
+        CourseComment.objects.create(course=course, content=comment_content, author=request.user,
+                                     anonymous=(request.POST.get('anonymous') == 'on'))
 
     return redirect('%s?id=%s' % (reverse('course_detail'), course_id))
 

@@ -58,6 +58,7 @@ class CourseComment(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User)
     created_at = models.DateTimeField(default=timezone.now)
+    anonymous = models.BooleanField(default=False)
     status = models.IntegerField(default=1)
     PUBLISHED = 1
     DELETED = -1

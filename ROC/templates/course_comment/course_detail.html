@@ -52,10 +52,22 @@
         {% for comment in comments  %}
             <div class="row">
                 <div class="col-md-1" style="float:left;">
+                    {% if comment.anonymous %}
+                    <img src="static/img/default_avatar.jpg" width="60em" height="60em" style="border-radius:3em">
+                    {% else %}
                     <img src="{{user.userinfo.avatar_url}}" width="60em" height="60em" style="border-radius:3em">
+                    {% endif %}
                 </div>
                 <div class="col-md-3" style="float:left;margin-top:0.5em;margin-left:-1.5em;">
-                    <p>{% bootstrap_icon 'user' %}&nbsp;<b>{{comment.author.userinfo.nickname}}</b></p>
+                    <p>{% bootstrap_icon 'user' %}&nbsp;
+                        <b>
+                        {% if comment.anonymous %}
+                        匿名用户
+                        {% else %}
+                        {{comment.author.userinfo.nickname}}
+                        {% endif %}
+                        </b>
+                    </p>
                     <p>{% bootstrap_icon 'time' %}&nbsp;{{comment.created_at}}</p>
                 </div>
             </div>
@@ -76,7 +88,7 @@
         <button type="submit" class="btn btn-primary" style="float:right">创建评价</button>
         <div class="checkbox" style="float:right">
 		    <label>
-			    <input type="checkbox"> 匿名评价&nbsp;&nbsp;&nbsp;
+			    <input id="anoymous" name="anonymous" type="checkbox"> 匿名评价&nbsp;&nbsp;&nbsp;
 		    </label>
 	    </div>
     </form>
