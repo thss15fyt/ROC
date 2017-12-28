@@ -55,7 +55,7 @@
                     {% if comment.anonymous %}
                     <img src="static/img/default_avatar.jpg" width="60em" height="60em" style="border-radius:3em">
                     {% else %}
-                    <img src="{{user.userinfo.avatar_url}}" width="60em" height="60em" style="border-radius:3em">
+                    <img src="{{comment.author.userinfo.avatar_url}}" width="60em" height="60em" style="border-radius:3em">
                     {% endif %}
                 </div>
                 <div class="col-md-3" style="float:left;margin-top:0.5em;margin-left:-1.5em;">
