@@ -64,7 +64,7 @@ def get_forms(available_time, dict, sorted_keys, courses):
 
 
 
-def form_core(raw_dict):
+def form_core(raw_dict, p_dict=None):
 	'''
 		This function performs course form Alg. for: input - python dict {'COURSE NAME': [available time]}
 	where $[available time]$ is a list of all available times (stringtime is a string, for instance, '4-6(前八周)' or '4-5(1,2,3,6-7周)') 
@@ -105,9 +105,19 @@ def form_core(raw_dict):
 						n_form[m1][m2] += '(' + c_name +' '+ raw_dict[c_name][c_idx] + ')'
 		final_form.append(n_form)
 
+	if p_dict == None:
+		return final_form
+	else:
+		max_p = 0.0
+		for i in range(len(final_result)):
+			now_p = 0.0
+			for c_name, c_idx in final_result[i]:
+				now_p += p_dict[c_name][c_idx]
+			if now_p > max_p:
+				max_idx = i 
+				max_p = now_p
+		return final_form, final_form[max_idx]
 
-
-	return final_form
 
 if __name__ == '__main__':
 	test_string0 = u'4-6(12周), 4-5(1,2,3,6-7周)'
@@ -118,5 +128,8 @@ if __name__ == '__main__':
 	print(StringTime2Array(test_string0))
 
 	all_course = {u'语文':[test_string0,test_string1], u'英语':[test_string2,test_string3]}
+	p_course = {u'语文':[0.5,1.0], u'英语':[0.7,0.7]}
 
-	print(form_core(all_course))
+	all_forms, best_form = form_core(all_course, p_course)
+	print(all_forms)
+	print(best_form)
