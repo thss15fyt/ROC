@@ -17,6 +17,13 @@ def choose_course(request):
                   {'courses': courses, 'star_courses': star_courses, 'choosen_courses': []})
 
 
+def choose_course_search(request):
+    keyword = request.GET.get('keyword')
+    courses = Course.objects.filter(name__contains=keyword)
+    return render(request, 'timetable/search_result.html',
+                  {'courses': courses})
+
+
 def choose_course_detail(request):
     id = request.GET.get('id')
     course = get_object_or_404(Course, id=id)

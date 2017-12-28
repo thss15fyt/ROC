@@ -91,7 +91,7 @@
 <div class="col-md-10 col-md-offset-1">
     <button id="button_prev" onclick="prev(1)" type="submit" class="btn btn-success pull-left" style="display:none;">上一方案</button>
     <button id="button_next" onclick="next(1)" type="submit" class="btn btn-success pull-right"
-    {% if results|length == 1 %} style="display:none;" {% endif %}>下一方案</button>
+    {% if results|length <= 1 %} style="display:none;" {% endif %}>下一方案</button>
 </div>
 {% endblock %}
 

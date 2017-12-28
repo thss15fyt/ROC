@@ -1,0 +1,25 @@
+{% load bootstrap3 %}
+
+<div id="course_list">
+    <table class="table table-striped">
+        <caption></caption>
+        <thead>
+            <tr>
+                <th></th>
+                <th>课程</th>
+                <th>教师</th>
+                <th>院系</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for course in courses %}
+        <tr>
+            <td onclick="select({{course.id}})" style="cursor:pointer;">{% bootstrap_icon 'plus' %}</td>
+            <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
+            <td>{{course.teacher}}</td>
+            <td>{{course.apartment.name}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

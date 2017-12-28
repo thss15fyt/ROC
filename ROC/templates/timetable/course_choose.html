@@ -5,7 +5,7 @@
 <div class="col-md-6"  style="height:50em;overflow-y:scroll;">
     <ul id="myTab" class="nav nav-tabs">
         <li class="active">
-            <a href="#search" data-toggle="tab">课程搜索</a>
+            <a href="#list" data-toggle="tab">课程列表</a>
         </li>
         <li>
             <a href="#star" data-toggle="tab">课程收藏</a>
@@ -15,44 +15,44 @@
         <div class="tab-pane fade in active" id="search">
             <br>
             <div class="input-group col-md-8 col-md-offset-2">
-                <input type="text" class="form-control" placeholder="课程搜索">
+                <input id="search_keyword" type="text" class="form-control" placeholder="课程搜索">
                 <span class="input-group-btn">
-                    <button class="btn btn-info" type="submit">搜索</button>
+                    <button onclick="search_course()" class="btn btn-info" type="submit">搜索</button>
                 </span>
             </div>
-            <div>
+            <div id="course_list">
                 <table class="table table-striped">
-                <caption></caption>
-                <thead>
+                    <caption></caption>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>课程</th>
+                            <th>教师</th>
+                            <th>院系</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in courses %}
                     <tr>
-                        <th></th>
-                        <th>课程</th>
-                        <th>教师</th>
-                        <th>院系</th>
+                        <td onclick="select({{course.id}})" style="cursor:pointer;">{% bootstrap_icon 'plus' %}</td>
+                        <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
+                        <td>{{course.teacher}}</td>
+                        <td>{{course.apartment.name}}</td>
                     </tr>
-                </thead>
-                <tbody>
-                {% for course in courses %}
-                <tr>
-                    <td onclick="select({{course.id}})" style="cursor:pointer;">{% bootstrap_icon 'plus' %}</td>
-                    <td><a href="/course_detail?id={{course.id}}">{{course.name}}</a></td>
-                    <td>{{course.teacher}}</td>
-                    <td>{{course.apartment.name}}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <ul class="pager">
-                <li><a href="?page=1">首页</a></li>
-                {% if courses.has_previous %}
-                    <li><a href="?page={{ courses.previous_page_number }}">上一页</a></li>
-                {% endif %}
-                <li> &nbsp{{ courses.number }} / {{ courses.paginator.num_pages }}&nbsp </li>
-                {% if courses.has_next %}
-                    <li><a href="?page={{ courses.next_page_number }}">下一页</a></li>
-                {% endif %}
-                <li><a href="?page={{courses.paginator.num_pages}}">末页</a></li>
-            </ul>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <ul class="pager">
+                    <li><a href="?page=1">首页</a></li>
+                    {% if courses.has_previous %}
+                        <li><a href="?page={{ courses.previous_page_number }}">上一页</a></li>
+                    {% endif %}
+                    <li> &nbsp{{ courses.number }} / {{ courses.paginator.num_pages }}&nbsp </li>
+                    {% if courses.has_next %}
+                        <li><a href="?page={{ courses.next_page_number }}">下一页</a></li>
+                    {% endif %}
+                    <li><a href="?page={{courses.paginator.num_pages}}">末页</a></li>
+                </ul>
             </div>
         </div>
 
@@ -159,10 +159,30 @@
                 ids += match[1] + ",";
             }
         });
+        if(ids === "") {
+            return;
+        }
         var $form = $("#choose_form");
         $("#ids_field").val(ids);
         $form.submit();
     }
+
+    function search_course() {
+        var keyword = $("#search_keyword")[0].value;
+        $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken:'{{ csrf_token }}',
+                keyword: keyword
+            }
+        });
+        $.get("/choose_course_search", {}, function(data, status) {
+            if(status === 'success') {
+                $("#course_list").html(data);
+            }
+        });
+
+    }
+
 
 </script>
 {% endblock %}

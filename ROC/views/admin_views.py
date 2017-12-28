@@ -30,7 +30,7 @@ def add_courses_submit(request):
 
         # add class to course or create course
         try:
-            course = Course.objects.get(course_id=info[1])
+            course = Course.objects.get(course_id=info[1], name=info[3], teacher=info[5])
         except ObjectDoesNotExist:
             course = Course.objects.create(
                 name=info[3],
