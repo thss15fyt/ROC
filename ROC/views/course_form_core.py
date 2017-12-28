@@ -108,15 +108,14 @@ def form_core(raw_dict, p_dict=None):
 	if p_dict == None:
 		return final_form
 	else:
-		max_p = 0.0
+		p_array = np.zeros((len(final_result),), np.float32)
 		for i in range(len(final_result)):
 			now_p = 0.0
 			for c_name, c_idx in final_result[i]:
 				now_p += p_dict[c_name][c_idx]
-			if now_p > max_p:
-				max_idx = i 
-				max_p = now_p
-		return final_form, final_form[max_idx]
+			p_array[i] = now_p
+		sorted_order = np.argsort(-p_array)
+		return [final_form[i] for i in sorted_order.tolist()]
 
 
 if __name__ == '__main__':
@@ -130,6 +129,5 @@ if __name__ == '__main__':
 	all_course = {u'语文':[test_string0,test_string1], u'英语':[test_string2,test_string3]}
 	p_course = {u'语文':[0.5,1.0], u'英语':[0.7,0.7]}
 
-	all_forms, best_form = form_core(all_course, p_course)
+	all_forms = form_core(all_course, p_course)
 	print(all_forms)
-	print(best_form)
