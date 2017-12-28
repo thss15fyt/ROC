@@ -15,7 +15,7 @@ def item_paginator(request, item_all):
     return items
 
 
-def string_time_to_array(stringtime):
+def StringTime2Array(stringtime):
     '''
     stringtime is a string, for instance, '4-6(前八周)' or '4-5(1,2,3,6-7周)'
     '''
@@ -75,7 +75,7 @@ def get_forms(available_time, dict, sorted_keys, courses):
         return return_value
 
 
-def form_core(raw_dict):
+def form_core(raw_dict, p_dict=None):
     '''
         This function performs course form Alg. for: input - python dict {'COURSE NAME': [available time]}
     where $[available time]$ is a list of all available times (stringtime is a string, for instance, '4-6(前八周)' or '4-5(1,2,3,6-7周)')
@@ -87,7 +87,7 @@ def form_core(raw_dict):
     for key in raw_dict.keys():
         input_dict[key] = []
         for i in range(len(raw_dict[key])):
-            input_dict[key].append(string_time_to_array(raw_dict[key][i]))
+            input_dict[key].append(StringTime2Array(raw_dict[key][i]))
 
     sorted_keys = sorted(input_dict, key=lambda k: len(input_dict[k]), reverse=False)
     timeArray = np.zeros((7, 6, 16), np.int)
@@ -113,7 +113,17 @@ def form_core(raw_dict):
             for m1 in range(7):
                 for m2 in range(6):
                     if np.sum(input_dict[c_name][c_idx][m1][m2]) > 0:
-                        n_form[m1][m2] += '\n' + c_name + ' ' + raw_dict[c_name][c_idx]
+                        n_form[m1][m2] += '(' + c_name + ' ' + raw_dict[c_name][c_idx] + ')'
         final_form.append(n_form)
 
-    return final_form
+    if p_dict == None:
+        return final_form
+    else:
+        p_array = np.zeros((len(final_result),), np.float32)
+        for i in range(len(final_result)):
+            now_p = 0.0
+            for c_name, c_idx in final_result[i]:
+                now_p += p_dict[c_name][c_idx]
+            p_array[i] = now_p
+        sorted_order = np.argsort(-p_array)
+        return [final_form[i] for i in sorted_order.tolist()]

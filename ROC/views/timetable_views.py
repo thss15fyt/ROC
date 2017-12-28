@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from ROC.views.utils import item_paginator
 from ROC.models import *
-from ROC.views.utils import string_time_to_array, form_core
+from ROC.views.utils import form_core
 import json
 
 
